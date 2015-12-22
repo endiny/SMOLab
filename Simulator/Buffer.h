@@ -1,24 +1,22 @@
 #pragma once
 #include "Customer.h"
-#include <vector>
+#include <QVector>
 #include <algorithm>
-#include <stdio.h>
+
 using namespace std;
 class Buffer
 {
 private:
-	int n;
-	vector<Customer*> buff;
-	vector<vector<Customer*>::iterator> buffOrder;
+	int size;
+	QVector<Customer*> buff;
 	int count;
 public:
-	Buffer(int n);
+	Buffer(int size);
 	~Buffer();
-	Customer* putAndReturnDenial(Customer* customer);
+	Customer* push(Customer* customer);
 	Customer* pop(int priority);
 	void print();
 	bool isEmpty();
-	Customer* back();
 	vector<string> getBuffer();
 };
 

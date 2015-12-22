@@ -26,7 +26,7 @@ void Simulator::nextAPstep()
 	customer = ap->getNewCustomer();
 	//statistic.addCustomer(customer);
 //	cout << "Customer: " << customer->getSourceNo() << " " << customer->getArrivalTime() << endl;
-	denial = buffer->putAndReturnDenial(customer);
+	denial = buffer->push(customer);
 //	buffer->print();
 	if (denial != NULL)
 	{

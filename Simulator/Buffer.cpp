@@ -1,81 +1,51 @@
 #include "stdafx.h"
 #include "Buffer.h"
 
-Buffer::Buffer(int n) {
-	this->n = n;
-	buff.resize(n, NULL);
-	buffOrder.reserve(n);
-	
-
+Buffer::Buffer(int size) {
+	this->size = size;
+	this->count = 0;
 }
 
 Buffer::~Buffer() {}
 
-Customer* Buffer::putAndReturnDenial(Customer* customer) {
-	for (auto i = buff.begin(); i < buff.end(); i++)
-	{
-		if (*i == NULL) {
-			*i = customer;
-			buffOrder.push_back(i);
-			return NULL;
-		}
+Customer* Buffer::push(Customer* customer) {
+	if (buff.size() == size) {
+		return NULL;
 	}
-	auto theOldestCustomer = buffOrder.front();
-	buffOrder.erase(buffOrder.begin());
-	buffOrder.push_back(theOldestCustomer);
-	Customer* denial = *theOldestCustomer;
-	*theOldestCustomer = customer;
-	return denial;
+	buff.append(customer);
+	count++;
+	return buff.last();
 }
 
 Customer* Buffer::pop(int priority) {
-	if (buffOrder.empty()) {
+	if (buff.isEmpty()) {
 		return NULL;
 	}
 
-	reverse(buffOrder.begin(), buffOrder.end());
-
-	auto iter = buffOrder.end();
-	for (auto i = buffOrder.begin(); i < buffOrder.end(); i++)
-	{
-		if ((*(*i))->getSourceNo() == priority)
-		{
-			iter = i;
-			break;
-		}
-		else if (iter == buffOrder.end())
-		{
-			iter = i;
-		}
-		else if ((*(*i))->getSourceNo() < (*(*iter))->getSourceNo())
-		{
-			iter = i;
+	unsigned short min(0xFFFF), index(0);
+	int i;
+	for (i=0; i<buff.size(); i++) {
+		if (buff[i]->getSourceNo() < min) {
+			min = buff[i]->getSourceNo();
+			index = i;
 		}
 	}
 
-	Customer* customer = (*(*iter));
-	(*(*iter)) = NULL;
-	buffOrder.erase(iter);
-	reverse(buffOrder.begin(), buffOrder.end());
-	return customer;
+	Customer* res = new Customer(buff.at(index)->getSourceNo(),buff.at(index)->getNo(), buff.at(index)->getArrivalTime());
+	buff.remove(index);
+	count--;
+	return res;
 }
 
 
 bool Buffer::isEmpty()
 {
-	return buffOrder.empty();
+	return buff.isEmpty();
 }
-
-Customer* Buffer::back()
-{
-	return *(buffOrder.back());
-}
-
-
 
 void Buffer::print()
 {
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < size; i++)
 	{
 		if (buff[i] != NULL)
 		{
@@ -90,12 +60,12 @@ void Buffer::print()
 
 vector<string> Buffer::getBuffer()
 {
-	vector<string> res(n, "");
-	for (int i = 0; i < n; i++)
+	vector<string> res(size, "");
+	for (int i = 0; i < size; i++)
 	{
 		if (buff[i] != NULL)
 		{
-            res[i] += "Customer: " + to_string(buff[i]->getSourceNo()) + "-"+to_string(buff[i]->getNo());
+			res[i] += "Customer: " + to_string(buff[i]->getSourceNo()) + "-"+to_string(buff[i]->getNo());
 		}
 		else
 		{
