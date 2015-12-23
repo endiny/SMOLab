@@ -10,14 +10,14 @@ Buffer::~Buffer() {}
 
 Customer* Buffer::push(Customer* customer) {
 	if (buff.size() == size) {
-		return NULL;
+		return customer;
 	}
 	buff.append(customer);
 	count++;
-	return buff.last();
+	return NULL;
 }
 
-Customer* Buffer::pop(int priority) {
+Customer* Buffer::pop() {
 	if (buff.isEmpty()) {
 		return NULL;
 	}
@@ -63,7 +63,7 @@ vector<string> Buffer::getBuffer()
 	vector<string> res(size, "");
 	for (int i = 0; i < size; i++)
 	{
-		if (buff[i] != NULL)
+		if (i<count)
 		{
 			res[i] += "Customer: " + to_string(buff[i]->getSourceNo()) + "-"+to_string(buff[i]->getNo());
 		}

@@ -41,7 +41,7 @@ void Simulator::nextAPstep()
 	if (!sp->isFull())
 	{
 //		cout << "to Server:" << endl;
-		sp->startService(buffer->pop(sp->getPriority()), t);
+		sp->startService(buffer->pop(), t);
 //		buffer->print();
 //		sp->print();
 	}
@@ -57,7 +57,7 @@ void Simulator::nextSPstep()
 	statistic->handleCustomer(customer);
 	if (!buffer->isEmpty())
 	{
-		sp->startService(buffer->pop(sp->getPriority()), t);
+		sp->startService(buffer->pop(), t);
 //		buffer->print();
 
 	}

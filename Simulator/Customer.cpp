@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "Customer.h"
+#include <qdebug.h>
 
 
 Customer::Customer(int sourceNo, int No, double arrivalTime)
 {
 	this->arrivalTime = arrivalTime;
+	//TODO: Some bug is here. Or somewhere else!
 	this->sourceNo = sourceNo;
     this->No = No;
 	serverNo = -1;
