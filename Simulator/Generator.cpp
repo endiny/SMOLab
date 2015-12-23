@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Generator.h"
-
+#include "math.h"
 Generator::Generator(double intensity)
 {
 	this->intensity = intensity;

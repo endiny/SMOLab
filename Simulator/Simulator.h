@@ -22,7 +22,7 @@ public:
 	void nextStep();
 	void run();
 	vector<string> getSourses();
-	vector<std::__cxx11::string> getBuffer();
+	vector<string> getBuffer();
 	vector<string> getServers();
     vector<string> getDenials();
 	Statistic* getStatistic();

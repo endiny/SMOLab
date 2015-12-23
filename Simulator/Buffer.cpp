@@ -80,7 +80,7 @@ vector<string> Buffer::getBuffer()
 	vector<string> res(size, "");
 	for (int i = 0; i < size; i++)
 	{
-		if (i<count)
+		if (buff->getCustomer())
 		{
 			res[i] += "Customer: " + to_string(buff->getCustomer()->getSourceNo()) + "-"+to_string(buff->getCustomer()->getNo());
 		}

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Poisson.h"
-
+#include "math.h"
 
 Poisson::Poisson()
 {
