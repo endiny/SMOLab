@@ -10,6 +10,28 @@ Buffer::~Buffer() {}
 
 Customer* Buffer::push(Customer* customer) {
 	if (buff.size() == size) {
+		uint min(0xFFFFFFFF), quantity(0);
+		int index(-1);
+		double maxTime(0);
+		for (int i=0; i<buff.size(); i++) {
+			if (buff[i]->getSourceNo() < min)
+				min = buff[i]->getSourceNo();
+		}
+		for (int i=0; i<buff.size(); i++) {
+			if ((buff[i]->getSourceNo() == min) && (buff[i]->getArrivalTime() > maxTime)) {
+				maxTime = buff[i]->getArrivalTime();
+				index = i;
+			}
+		}
+		if (customer->getSourceNo() < buff[index]->getSourceNo()) {
+			std::swap(customer, buff[index]);
+			return customer;
+		if ((customer->getArrivalTime() <= buff[index]->getArrivalTime())
+				&& customer->getSourceNo() == buff[index]->getSourceNo()) {
+				std::swap(customer, buff[index]);
+				return customer;
+			}
+		}
 		return customer;
 	}
 	buff.append(customer);
