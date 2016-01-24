@@ -68,6 +68,7 @@ bool Buffer::isEmpty()
 	BufferNode* tmp = buff;
 	for (int i=0; i<size; i++) {
 		if (buff->getCustomer()) {
+			res = true;
 			break;
 		}
 		tmp = tmp->next();
