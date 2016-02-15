@@ -33,6 +33,7 @@ void Simulator::nextAPstep()
 //		cout << "    DENIAL: " << denial->getSourceNo() << " " << denial->getArrivalTime() << endl;
 		statistic->handleDenial(denial);
         denials.insert(denials.begin(),to_string(denial->getSourceNo())+"-"+to_string(denial->getNo()));
+		delete denial;
 	}
 	else
 	{
