@@ -7,11 +7,11 @@ using namespace std;
 class Buffer
 {
 private:
-	int size;
+	int m_size;
 	QVector<Customer*> buff;
 	int count;
 public:
-	Buffer(int size);
+	Buffer(int m_size);
 	~Buffer();
 	Customer* push(Customer* customer);
 	Customer* pop();

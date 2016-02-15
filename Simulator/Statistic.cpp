@@ -43,8 +43,6 @@ void Statistic::handleDenial(Customer* denial)
 {
 	count[denial->getSourceNo()]++;
 	denialCount[denial->getSourceNo()]++;
-	delete denial;
-
 }
 
 void Statistic::print()

@@ -1,15 +1,13 @@
 #include "stdafx.h"
 #include "Buffer.h"
 
-Buffer::Buffer(int size) {
-	this->size = size;
-	this->count = 0;
-}
+Buffer::Buffer(int size):
+	m_size(size), count(0) {}
 
 Buffer::~Buffer() {}
 
 Customer* Buffer::push(Customer* customer) {
-	if (buff.size() == size) {
+	if (buff.size() == m_size) {
 		uint min(0xFFFFFFFF), quantity(0);
 		int index(-1);
 		double maxTime(0);
@@ -67,7 +65,7 @@ bool Buffer::isEmpty()
 
 void Buffer::print()
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < m_size; i++)
 	{
 		if (buff[i] != NULL)
 		{
@@ -82,8 +80,8 @@ void Buffer::print()
 
 vector<string> Buffer::getBuffer()
 {
-	vector<string> res(size, "");
-	for (int i = 0; i < size; i++)
+	vector<string> res(m_size, "");
+	for (int i = 0; i < m_size; i++)
 	{
 		if (i<count)
 		{
