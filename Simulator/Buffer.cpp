@@ -4,80 +4,75 @@
 Buffer::Buffer(int size) {
 	this->size = size;
 	this->count = 0;
+	buff = new BufferNode(true);
+	size--;
+	while (size) {
+		buff->insert();
+		size--;
+	}
 }
 
 Buffer::~Buffer() {}
 
 Customer* Buffer::push(Customer* customer) {
-	if (buff.size() == size) {
-		uint min(0xFFFFFFFF), quantity(0);
-		int index(-1);
-		double maxTime(0);
-		for (int i=0; i<buff.size(); i++) {
-			if (buff[i]->getSourceNo() < min)
-				min = buff[i]->getSourceNo();
+	for (int i=0; i<size; i++) {
+		if (!(buff->getCustomer())) {
+			buff->setCustomer(customer);
+			buff = buff->next();
+			return NULL;
 		}
-		for (int i=0; i<buff.size(); i++) {
-			if ((buff[i]->getSourceNo() == min) && (buff[i]->getArrivalTime() > maxTime)) {
-				maxTime = buff[i]->getArrivalTime();
-				index = i;
-			}
-		}
-		if (customer->getSourceNo() < buff[index]->getSourceNo()) {
-			std::swap(customer, buff[index]);
-			return customer;
-		if ((customer->getArrivalTime() <= buff[index]->getArrivalTime())
-				&& customer->getSourceNo() == buff[index]->getSourceNo()) {
-				std::swap(customer, buff[index]);
-				return customer;
-			}
-		}
-		return customer;
+		buff = buff->next();
 	}
-	buff.append(customer);
-	count++;
-	return NULL;
+	return customer;
 }
 
 Customer* Buffer::pop() {
-	if (buff.isEmpty()) {
-		return NULL;
-	}
 
-	unsigned short min(0xFFFF), index(0);
+	double min(1.7976931348623157e+308);
 	int i;
-	for (i=0; i<buff.size(); i++) {
-		if (buff[i]->getSourceNo() < min) {
-			min = buff[i]->getSourceNo();
-			index = i;
+	for (i=0; i<size; i++) {
+		if (buff->getCustomer() && buff->getCustomer()->getArrivalTime() < min) {
+			min = buff->getCustomer()->getArrivalTime();
+			break;
 		}
+		buff = buff->next();
 	}
 
-	Customer* res = new Customer(buff.at(index)->getSourceNo(),buff.at(index)->getNo(), buff.at(index)->getArrivalTime());
-	buff.remove(index);
-	count--;
+	Customer* res = new Customer(buff->getCustomer()->getSourceNo(),
+								 buff->getCustomer()->getNo(),
+								 buff->getCustomer()->getArrivalTime());
+	buff->setCustomer(NULL);
+	buff = buff->next();
 	return res;
-}
-
-
-bool Buffer::isEmpty()
-{
-	return buff.isEmpty();
 }
 
 void Buffer::print()
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (buff[i] != NULL)
+		if (buff->getCustomer() != NULL)
 		{
-			cout <<"    |"<< buff[i]->getSourceNo() << "-" << buff[i]->getArrivalTime() <<"|"<< endl;
+			cout <<"    |"<< buff->getCustomer()->getSourceNo() << "-" << buff->getCustomer()->getArrivalTime() <<"|"<< endl;
 		}
 		else
 		{
 			cout << "    |NULL|" << endl;
 		}
+		buff = buff->next();
 	}
+}
+
+bool Buffer::isEmpty()
+{
+	bool res = false;
+	BufferNode* tmp = buff;
+	for (int i=0; i<size; i++) {
+		if (buff->getCustomer()) {
+			break;
+		}
+		tmp = tmp->next();
+	}
+	return res;
 }
 
 vector<string> Buffer::getBuffer()
@@ -87,12 +82,13 @@ vector<string> Buffer::getBuffer()
 	{
 		if (i<count)
 		{
-			res[i] += "Customer: " + to_string(buff[i]->getSourceNo()) + "-"+to_string(buff[i]->getNo());
+			res[i] += "Customer: " + to_string(buff->getCustomer()->getSourceNo()) + "-"+to_string(buff->getCustomer()->getNo());
 		}
 		else
 		{
 			res[i] += "-----";
 		}
+		buff = buff->next();
 	}
 	return res;
 }

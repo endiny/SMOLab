@@ -1,5 +1,5 @@
 #pragma once
-#include "Customer.h"
+#include "BufferNode.h"
 #include <QVector>
 #include <algorithm>
 
@@ -8,7 +8,7 @@ class Buffer
 {
 private:
 	int size;
-	QVector<Customer*> buff;
+	BufferNode* buff;
 	int count;
 public:
 	Buffer(int size);
