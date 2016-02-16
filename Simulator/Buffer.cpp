@@ -68,12 +68,11 @@ bool Buffer::isEmpty()
 	BufferNode* tmp = buff;
 	for (int i=0; i<size; i++) {
 		if (buff->getCustomer()) {
-			res = true;
-			break;
+			return false;
 		}
 		tmp = tmp->next();
 	}
-	return res;
+	return true;
 }
 
 vector<string> Buffer::getBuffer()

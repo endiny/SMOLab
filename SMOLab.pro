@@ -1,4 +1,3 @@
-<<<<<<< 2d0f59113b5a00bf438291a1a67c4e7e567e3c3b
 #-------------------------------------------------
 #
 # Project created by QtCreator 2015-12-02T02:53:39
@@ -17,6 +16,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Simulator/ArrivalProcess.cpp \
     Simulator/Buffer.cpp \
+    Simulator/BufferNode.cpp \
     Simulator/Customer.cpp \
     Simulator/Generator.cpp \
     Simulator/Poisson.cpp \
@@ -35,6 +35,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     Simulator/ArrivalProcess.h \
     Simulator/Buffer.h \
+    Simulator/BufferNode.h \
     Simulator/Customer.h \
     Simulator/Generator.h \
     Simulator/Poisson.h \
